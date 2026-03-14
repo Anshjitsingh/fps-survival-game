@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FPS Survival</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="menu">
+<h1>FPS SURVIVAL</h1>
+<button onclick="startGame()">PLAY</button>
+</div>
+
+<div id="gameover">
+<h1>GAME OVER</h1>
+<button onclick="location.reload()">RESTART</button>
+</div>
+
+<div id="hud">
+Health: <span id="health">100</span><br>
+Score: <span id="score">0</span>
+</div>
+
+<div id="crosshair"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="game.js"></script>
+
+</body>
+</html>
