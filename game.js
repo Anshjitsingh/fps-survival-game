@@ -85,39 +85,50 @@ if(e.code==="KeyD") moveRight=false
 
 document.addEventListener("mousedown",shoot)
 
-function shoot(){
+let currentWeapon = "pistol"; // L'arma predefinita è la pistola
 
-let geo=new THREE.SphereGeometry(0.2)
-let mat=new THREE.MeshBasicMaterial({color:0xffff00})
+document.addEventListener("mousedown", shoot);
 
-let bullet=new THREE.Mesh(geo,mat)
+function shoot() {
+    let geo, mat;
 
-bullet.position.copy(camera.position)
+    // Se l'arma è la pistola
+    if (currentWeapon === "pistol") {
+        geo = new THREE.SphereGeometry(0.2);
+        mat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    } 
+    // Se l'arma è il fucile
+    else if (currentWeapon === "rifle") {
+        geo = new THREE.SphereGeometry(0.1);
+        mat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    }
 
-bullet.direction=new THREE.Vector3(0,0,-1)
-bullet.direction.applyQuaternion(camera.quaternion)
-
-scene.add(bullet)
-bullets.push(bullet)
-
+    let bullet = new THREE.Mesh(geo, mat);
+    bullet.position.copy(camera.position);
+    bullet.direction = new THREE.Vector3(0, 0, -1);
+    bullet.direction.applyQuaternion(camera.quaternion);
+    scene.add(bullet);
+    bullets.push(bullet);
 }
 
-function spawnEnemy(){
+document.addEventListener("keydown", (e) => {
+    if (e.code === "Digit1") {
+        currentWeapon = "pistol"; // Cambia a pistola
+    }
+    if (e.code === "Digit2") {
+        currentWeapon = "rifle"; // Cambia a fucile
+    }
+});
 
-let geo=new THREE.BoxGeometry(2,2,2)
-let mat=new THREE.MeshStandardMaterial({color:0xaa0000})
-
-let enemy=new THREE.Mesh(geo,mat)
-
-enemy.position.x=(Math.random()-0.5)*100
-enemy.position.z=(Math.random()-0.5)*100
-enemy.position.y=0
-
-enemy.scale.set(1.5,1.5,1.5)
-
-scene.add(enemy)
-enemies.push(enemy)
-
+function spawnEnemy() {
+    let geo = new THREE.SphereGeometry(2, 16, 16); // Crea una sfera
+    let mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Colore verde (per zombie)
+    let enemy = new THREE.Mesh(geo, mat);
+    enemy.position.x = (Math.random() - 0.5) * 100;
+    enemy.position.z = (Math.random() - 0.5) * 100;
+    enemy.position.y = 0;
+    scene.add(enemy);
+    enemies.push(enemy);
 }
 
 setInterval(spawnEnemy,4000)
